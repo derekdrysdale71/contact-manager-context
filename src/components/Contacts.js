@@ -25,6 +25,12 @@ class Contacts extends Component {
     ]
   };
 
+  removeContact = id => {
+    const { contacts } = this.state;
+    const newContacts = contacts.filter(contact => contact.id !== id);
+    this.setState({ contacts: newContacts });
+  }
+
   render() {
     const { contacts } = this.state;
     return (
@@ -33,6 +39,7 @@ class Contacts extends Component {
           <Contact
             key={contact.id}
             contact={contact}
+            removeContact={this.removeContact.bind(this, contact.id)}
           />
         )}
       </React.Fragment>

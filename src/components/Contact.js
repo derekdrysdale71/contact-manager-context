@@ -6,8 +6,12 @@ class Contact extends Component {
     showContactDetails: false
   };
 
-  onShowClick = (event) => {
+  onShowDetails = () => {
     this.setState({ showContactDetails: !this.state.showContactDetails })
+  }
+
+  onRemoveContact = () => {
+    this.props.removeContact();
   }
 
   render() {
@@ -16,7 +20,18 @@ class Contact extends Component {
 
     return (
       <div className="card card-body mb-3">
-        <h4>{name} <i onClick={this.onShowClick} className="fas fa-sort-down"></i> </h4>
+        <h4>{name}{' '}
+          <i
+            className="fas fa-sort-down"
+            style={{ cursor: 'pointer' }}
+            onClick={this.onShowDetails}
+          />
+          <i
+            className="fas fa-times"
+            style={{ cursor: 'pointer', float: 'right', color: 'red' }}
+            onClick={this.onRemoveContact}
+          />
+        </h4>
         {showContactDetails ? (
           <ul className="list-group">
             <li className="list-group-item">Email: {email}</li>
@@ -29,7 +44,8 @@ class Contact extends Component {
 }
 
 Contact.propTypes = {
-  contact: PropTypes.object.isRequired
+  contact: PropTypes.object.isRequired,
+  removeContact: PropTypes.func.isRequired
 }
 
 export default Contact;
