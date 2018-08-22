@@ -7,7 +7,8 @@ class AddContact extends Component {
   state = {
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    errors: {}
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value })
@@ -15,11 +16,26 @@ class AddContact extends Component {
   onSubmit = (dispatch, e) => {
     e.preventDefault();
     const { name, email, phone } = this.state;
+
+    //Validate Fields
+    if (name === '') {
+      this.setState({ errors: { name: 'Name is a required field' } });
+      return;
+    }
+    if (email === '') {
+      this.setState({ errors: { email: 'Email is a required field' } });
+      return;
+    }
+    if (phone === '') {
+      this.setState({ errors: { phone: 'Phone is a required field' } });
+      return;
+    }
     const newContact = {
       id: uuid(),
       name,
       email,
-      phone
+      phone,
+      errors: {}
     }
     dispatch({ type: 'ADD_CONTACT', payload: newContact });
 
@@ -32,7 +48,7 @@ class AddContact extends Component {
   }
 
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone, errors } = this.state;
 
     return (
       <Consumer>
@@ -48,6 +64,7 @@ class AddContact extends Component {
                     name="name"
                     value={name}
                     onChange={this.onChange}
+                    error={errors.name}
                   />
                   <TextInputGroup
                     label="Email"
@@ -55,6 +72,7 @@ class AddContact extends Component {
                     name="email"
                     value={email}
                     onChange={this.onChange}
+                    error={errors.email}
                   />
                   <TextInputGroup
                     label="Phone"
@@ -62,6 +80,7 @@ class AddContact extends Component {
                     name="phone"
                     value={phone}
                     onChange={this.onChange}
+                    error={errors.phone}
                   />
                   <input
                     className="btn btn-light btn-block"
