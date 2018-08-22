@@ -1,9 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const headerStyle = {
+  backgroundColor: "#563d7c",
+  minHeight: "4rem"
+}
+
 const Header = ({ branding }) => {
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-0">
+    <nav
+      className="navbar navbar-expand navbar-dark mb-3 py-0"
+      style={headerStyle}>
       <div className="container">
         <a href="/" className="navbar-brand">
           {branding}
@@ -28,7 +35,7 @@ const Header = ({ branding }) => {
           </ul>
         </div>
       </div>
-    </nav>
+    </nav >
   )
 }
 
