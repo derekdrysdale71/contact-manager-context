@@ -12,9 +12,14 @@ class Contact extends Component {
     this.setState({ showContactDetails: !this.state.showContactDetails })
   }
 
-  onRemoveContact = (id, dispatch) => {
-    axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-      .then(res => dispatch({ type: 'REMOVE_CONTACT', payload: id }))
+  onRemoveContact = async (id, dispatch) => {
+    //Added try-catch to actually delete the contact with no access to actual database
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+      dispatch({ type: 'REMOVE_CONTACT', payload: id });
+    } catch (e) {
+      dispatch({ type: 'REMOVE_CONTACT', payload: id });
+    }
   };
 
   render() {
